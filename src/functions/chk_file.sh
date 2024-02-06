@@ -29,9 +29,9 @@ chk_file() {
     exit 1
   fi
   if ${extended_checks}; then
-    echo_message "RELRO           STACK CANARY      NX            PIE             SELFRANDO             Clang CFI            SafeStack            RPATH      RUNPATH\tSymbols\t\tFORTIFY\tFortified\tFortifiable\tFILE\n" '' '' '{'
+    echo_message "RELRO           STACK CANARY      NX            PIE             Hardware CFI    SELFRANDO             Clang CFI            SafeStack            RPATH      RUNPATH\tSymbols\t\tFORTIFY\tFortified\tFortifiable\tFILE\n" '' '' '{'
   else
-    echo_message "RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH\tSymbols\t\tFORTIFY\tFortified\tFortifiable\tFILE\n" '' '' '{'
+    echo_message "RELRO           STACK CANARY      NX            PIE             Hardware CFI    RPATH      RUNPATH\tSymbols\t\tFORTIFY\tFortified\tFortifiable\tFILE\n" '' '' '{'
   fi
   filecheck "${CHK_FILE}"
   if [[ "$(find "${CHK_FILE}" \( -perm -004000 -o -perm -002000 \) -type f -print)" ]]; then
@@ -44,9 +44,9 @@ chk_file() {
 chk_file_list() {
 
   if ${extended_checks}; then
-    echo_message "RELRO           STACK CANARY      NX            PIE             SELFRANDO             Clang CFI            SafeStack            RPATH      RUNPATH\tSymbols\t\tFORTIFY\tFortified\tFortifiable\tFILE\n" '' '' '{\n'
+    echo_message "RELRO           STACK CANARY      NX            PIE             Hardware CFI    SELFRANDO             Clang CFI            SafeStack            RPATH      RUNPATH\tSymbols\t\tFORTIFY\tFortified\tFortifiable\tFILE\n" '' '' '{\n'
   else
-    echo_message "RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH\tSymbols\t\tFORTIFY\tFortified\tFortifiable\tFILE\n" '' '' '{\n'
+    echo_message "RELRO           STACK CANARY      NX            PIE             Hardware CFI    RPATH      RUNPATH\tSymbols\t\tFORTIFY\tFortified\tFortifiable\tFILE\n" '' '' '{\n'
   fi
 
   LAST_LINE_NUMBER=$(wc -l < "${CHK_FILE_LIST}")

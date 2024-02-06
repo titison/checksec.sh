@@ -53,6 +53,18 @@ filecheck() {
     echo_message '\033[33mNot an ELF file\033[m   ' 'Not an ELF file,' ' pie="not_elf"' '"pie":"not_elf",'
   fi
 
+  # check for Hardware CLI / IntelCET support
+  local hwcli=$(${readelf} --notes "${1}" 2> /dev/null | grep 'x86 feature:')
+  if [[ $hwcli == *"IBT"* ]] && [[ $hwcli == *"SHSTK"* ]]; then
+    echo_message '\033[32mIBT & SHSTK    \033[m   ' 'IBT & SHSTK,' ' hwcfi="full"' '"hwcfi":"full",'
+  elif [[ $hwcli == *"IBT"* ]]; then
+    echo_message '\033[33mIBT          \033[m   ' 'IBT,' ' hwcfi="ibt"' '"hwcfi":"ibt",'
+  elif [[ $hwcli == *"SHSTK"* ]]; then
+    echo_message '\033[33mSHSTK        \033[m   ' 'SHSTK,' ' hwcfi="shstk"' '"hwcfi":"shstk",'
+  else
+    echo_message '\033[31mNo           \033[m   ' 'No,' ' hwcfi="no"' '"hwcfi":"no",'
+  fi
+
   if ${extended_checks}; then
     # check for selfrando support
     if ${readelf} -S "${1}" 2> /dev/null | grep -c 'txtrp' | grep -q '1'; then
