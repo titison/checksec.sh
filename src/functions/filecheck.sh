@@ -53,7 +53,7 @@ filecheck() {
     echo_message '\033[33mNot an ELF file\033[m   ' 'Not an ELF file,' ' pie="not_elf"' '"pie":"not_elf",'
   fi
 
-  # check for Hardware CLI / IntelCET support
+  # check for Hardware CFI / IntelCET support
   local hwcli=$(${readelf} --notes "${1}" 2> /dev/null | grep 'x86 feature:')
   if [[ $hwcli == *"IBT"* ]] && [[ $hwcli == *"SHSTK"* ]]; then
     echo_message '\033[32mIBT & SHSTK    \033[m   ' 'IBT & SHSTK,' ' hwcfi="full"' '"hwcfi":"full",'
@@ -62,15 +62,15 @@ filecheck() {
   elif [[ $hwcli == *"SHSTK"* ]]; then
     echo_message '\033[33mSHSTK        \033[m   ' 'SHSTK,' ' hwcfi="shstk"' '"hwcfi":"shstk",'
   else
-    echo_message '\033[31mNo           \033[m   ' 'No,' ' hwcfi="no"' '"hwcfi":"no",'
+    echo_message '\033[31mNo           \033[m   ' 'No' ' hwcfi="no"' '"hwcfi":"no",'
   fi
 
   if ${extended_checks}; then
     # check for selfrando support
     if ${readelf} -S "${1}" 2> /dev/null | grep -c 'txtrp' | grep -q '1'; then
-      echo_message '\033[32mSelfrando enabled  \033[m   '
+      echo_message '\033[32mSelfrando enabled  \033[m   ' 'with Selfrando' 'selfrando="yes"' 'selfrando="yes",'
     else
-      echo_message '\033[31mNo Selfrando       \033[m   '
+      echo_message '\033[31mNo Selfrando       \033[m   ' 'without Selfrando' 'selfrando="yes"' 'selfrando="yes",'
     fi
   fi
 
