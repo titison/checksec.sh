@@ -763,7 +763,7 @@ filecheck() {
     if ${readelf} -S "${1}" 2> /dev/null | grep -c 'txtrp' | grep -q '1'; then
       echo_message '\033[32mSelfrando enabled  \033[m   ' 'with Selfrando' 'selfrando="yes"' 'selfrando="yes",'
     else
-      echo_message '\033[31mNo Selfrando       \033[m   ' 'without Selfrando' 'selfrando="yes"' 'selfrando="yes",'
+      echo_message '\033[31mNo Selfrando       \033[m   ' 'without Selfrando' 'selfrando="no"' 'selfrando="no",'
     fi
   fi
 
